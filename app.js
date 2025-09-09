@@ -144,7 +144,8 @@ function dashboardView(){
   const right = document.createElement('div');
   right.className = 'row';
   right.appendChild(kpi('Today', new Date().toLocaleDateString()));
-  const top3 = state.data.daily.top3.map((t,i)=> `${i+1}) ${t||'—'}`).join('\\n');
+  // const top3 = state.data.daily.top3.map((t,i)=> `${i+1}) ${t||'—'}`).join('\\n');
+  const top3 = state.data.daily.top3.map((t,i)=> `${i+1}) ${t || '—'}`).join('\n');
   right.appendChild(kpi('Today — Top‑3', top3));
   const stars = (state.data.job.stars||[]).length;
   right.appendChild(kpi('Stories in Bank', String(stars)));
@@ -172,9 +173,15 @@ function dailyView(){
   left.appendChild(textArea('Training (18:00–19:00):', state.data.daily.blocks.train, v => { state.data.daily.blocks.train=v; save(); }));
 
   const right = document.createElement('div'); right.className = 'card';
-  right.appendChild(textArea('Three small wins I will create today', (state.data.daily.wins||['','','']).join('\\n'), v => {
-    state.data.daily.wins = v.split('\\n').slice(0,3);
-    save(); }));
+  // right.appendChild(textArea('Three small wins I will create today', (state.data.daily.wins||['','','']).join('\\n'), v => {
+  //   state.data.daily.wins = v.split('\\n').slice(0,3);
+  //   save(); }));
+  right.appendChild(textArea(
+    'Three small wins I will create today',
+    (state.data.daily.wins || ['', '', '']).join('\n'),
+    v => { state.data.daily.wins = v.split('\n').slice(0, 3); save(); }
+  ));
+  
   const tools = chunk('<div class="toolbar"></div>');
   const newDay = document.createElement('button'); newDay.className='btn'; newDay.textContent='⧉ New Day (copy Top‑3)';
   newDay.addEventListener('click', () => {
